@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { deleteUser, users } from '../db';
-import { UserBody } from '../models/user';
+import { UserBody, User } from '../models/user';
 import { v4 as uuidv4, validate } from 'uuid';
 import {
   getBody,
@@ -69,7 +69,7 @@ export function handleRequest(req: IncomingMessage, res: ServerResponse) {
             res.statusCode = 404;
             res.end(`User with id ${reqParam} doesn't exist`);
           } else {
-            getBody<UserBody>(req).then((newUser) => {
+            getBody<User>(req).then((newUser) => {
               users[idx] = { ...users[idx], ...newUser };
               res.end(JSON.stringify(users[idx]));
             });
